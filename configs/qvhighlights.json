@@ -1,0 +1,219 @@
+{
+  "audit_epochs": [
+    1,
+    4,
+    8,
+    9,
+    12,
+    20,
+    24
+  ],
+  "base_checkpoint": null,
+  "batch_size": 64,
+  "checkpointing": {
+    "enabled": true,
+    "evaluator_version": "official_validation_fixed_fullgrid_nms05_with_raw_round31",
+    "keep_epoch_checkpoints": false,
+    "official_batch_size": 64,
+    "official_device": "cuda:0",
+    "stop_on_evaluation_failure": true
+  },
+  "data_factory": {
+    "kwargs": {
+      "root": "@ROOT@"
+    },
+    "target": "backbone.conditioned.paired_loader:build_repository_data_with_paired_rng"
+  },
+  "device": "cuda:0",
+  "ema_enabled": false,
+  "epochs": 24,
+  "evaluator_factory": {
+    "kwargs": {
+      "max_candidates": 30,
+      "nms_iou_threshold": 0.5,
+      "precision": "fp32",
+      "project_root": "@ROOT@",
+      "root": "@ROOT@",
+      "timeout_seconds": 240,
+      "wrapper": "@ROOT@/src/backbone/conditioned/official_eval.py"
+    },
+    "target": "eventfieldnet.validation:build_evaluator"
+  },
+  "fail_on_frozen_drift": true,
+  "fixed_final": true,
+  "fixed_panel_path": "@ROOT@/configs/probe_panel.json",
+  "grad_accumulation": 1,
+  "grad_clip": 1.0,
+  "job_hard_seconds": 345600,
+  "learning_rate": 0.0001,
+  "model_factory": {
+    "kwargs": {
+      "a_local_evidence": true,
+      "aux_detach_input": false,
+      "b_edge_support": true,
+      "c_latent_composition": false,
+      "carrier_mode": "tanh",
+      "conditioner_output_gain": 0.1,
+      "counterfactual_video_key": "src_vid",
+      "counterfactual_visual_channels": 512,
+      "e_readout_scale": "fixed_init",
+      "evidence_input_mode": "token_attention_product",
+      "evidence_reduction": "candidate_mean",
+      "evidence_supervision": "wrong_query",
+      "extension_lr": 6e-05,
+      "fixed_control_bits": 7,
+      "independent_s_projection": true,
+      "initial_field_gate": 0.05,
+      "input_field_rank": 64,
+      "loss_weights": {
+        "endpoint": 0.1,
+        "evidence": 0.1,
+        "rank": 0.5,
+        "support": 0.1,
+        "transition": 0.1
+      },
+      "max_update_ratio": 0.05,
+      "min_span_clips": 1,
+      "quality_stratified": true,
+      "query_relative_e": false,
+      "rank_candidate_pair": true,
+      "rank_competition": "global",
+      "rank_form": "dense",
+      "rank_kl_half": false,
+      "rank_logit_scale": 2.0,
+      "rank_margin": 0.1,
+      "rank_mode": "gt_balanced_kl",
+      "rank_stop_s": false,
+      "rank_target_exponent": 4.0,
+      "rank_target_threshold": 0.7,
+      "scratch_residual_gate": 0.05,
+      "scratch_total_epochs": 420,
+      "selector_lr": 0.0001,
+      "support_candidate_chunk_size": 128,
+      "support_conditioning_position": "post_encoder",
+      "support_deployment": "in_score",
+      "support_hops": 1,
+      "support_input": "rms",
+      "support_input_mode": "query_agreement_transport",
+      "support_length_center": false,
+      "support_mode": "nonlinear",
+      "support_pair_mode": "joint_residual",
+      "support_readout": "edge_mean",
+      "support_wide_pair": true,
+      "trainability": "full_path",
+      "transition_barrier": true,
+      "transition_conditioning_position": "pre_encoder",
+      "transition_context_mode": "none",
+      "transition_input_mode": "query_agreement_delta",
+      "transition_target_mode": "independent_max",
+      "variant": "y21",
+      "counterfactual_support_mix": 0.0,
+      "r51_spec": {},
+      "r53_spec": {},
+      "r54_spec": {},
+      "r58_spec": {
+        "mode": "kl_plus_quality",
+        "bias": false
+      },
+      "r58_bias_init": 0.0,
+      "r59_spec": {
+        "mode": "local_s_coverage"
+      },
+      "r68_spec": {
+        "mode": "hinge_legacy_route"
+      },
+      "long_s_spec": {
+        "upper": false,
+        "long_weight": false
+      },
+      "followup_spec": {
+        "edge_route": true,
+        "long_kl": false
+      }
+    },
+    "target": "eventfieldnet.model_factory:build_model"
+  },
+  "negative_selection_mode": "hardest",
+  "num_workers": 2,
+  "optimizer_lr_scale": 1.0,
+  "output_dir": "@OUTPUT@",
+  "phases": [
+    {
+      "audit_epochs": [
+        1,
+        4,
+        8,
+        9,
+        12,
+        20,
+        24
+      ],
+      "audit_snapshot_limit": 100,
+      "early_stop": {
+        "enabled": false
+      },
+      "max_epochs": 24,
+      "name": "r68_k04_retention_and_s",
+      "schedule_epochs": 24,
+      "start_epoch": 0,
+      "wallclock_seconds": 345600,
+      "warmup_epochs": 3
+    }
+  ],
+  "precision": "fp32",
+  "probe_epochs": [
+    0,
+    1,
+    4,
+    8,
+    9,
+    12,
+    20,
+    24
+  ],
+  "probe_factory": {
+    "kwargs": {
+      "max_batches": 4
+    },
+    "target": "eventfieldnet.probes:build_probe_suite"
+  },
+  "resume": false,
+  "schedule_epochs": 24,
+  "schema": "eventfieldnet_trifield_round31_config_v1",
+  "seed": 2041,
+  "source_roots": [
+    "@ROOT@/src",
+    "@ROOT@"
+  ],
+  "step_telemetry": {
+    "enabled": true,
+    "max_samples_per_epoch": 1
+  },
+  "target_keys": [
+    "gt_spans",
+    "gt_span_mask"
+  ],
+  "teacher": {
+    "end_epoch": 0,
+    "factory": null
+  },
+  "warmup_epochs": 3,
+  "weight_decay": 0.05,
+  "rank_topk_restrict": 30,
+  "rank_length_reweight_gain": 0.15,
+  "support_shift_relaxed_fallback": false,
+  "lr_schedule_mode": "milestone",
+  "lr_schedule_milestones": [
+    10,
+    20,
+    40
+  ],
+  "lr_schedule_gamma": 0.3,
+  "train": {
+    "schema": "r68_actual_parent_lr_v1",
+    "entrypoint": "eventfieldnet.train",
+    "late_parent_start_epoch": 11,
+    "late_parent_multiplier": 1.0
+  },
+  "name": "eventfieldnet_v00"
+}
