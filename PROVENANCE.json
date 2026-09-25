@@ -1,0 +1,16 @@
+{
+  "original_c02_config_sha256": "480672e5ada2fb746d329f877209e6e3c850efae124580ff8891a86727d86443",
+  "original_modules": {
+    "evaluation.py": "ada3acd24d511058d474f73b2f0eeeefd18605b589546bacfe37da20142ccabe",
+    "evaluator.py": "50863cf93524f50c362fc1d028f012c0a0c8fbf6f2d999d383f9d9931a93dc81",
+    "e_only.py": "ce7efa17596789b9c30400392fccc2a204ee86c3b777eebfffefaaaf66719172",
+    "model.py": "e55ca7e0962fba2e030d1465b877d38ffed91fce4cf40b41096e5f0f0ce00019",
+    "objectives.py": "6ce223087c2085bdc2e7f64a81fc28afcd25efbc615fb540a447c5a219a27658",
+    "pairing.py": "2a161ca82b73b91a6f35685bc19c6b71e92d579cda4eb062bb25b9a5f56a47a5",
+    "test_objectives.py": "ddb6e4a03a9ba27fc3d472bec144d4c991f634f32ac830a443d19148812f9636",
+    "__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "model": "EventFieldNet",
+  "recipe": "C02",
+  "test_exposure": "Selected after test comparison; not an untouched held-out selection"
+}

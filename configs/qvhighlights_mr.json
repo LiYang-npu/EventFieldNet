@@ -1,5 +1,5 @@
 {
-  "task": "mr_hd",
+  "task": "mr",
   "seed": 2041,
   "output_dir": "@OUTPUT@",
   "device": "cuda:0",

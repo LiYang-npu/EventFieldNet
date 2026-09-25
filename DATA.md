@@ -1,18 +1,14 @@
 # Data and features
 
-```
-data/qvhighlights/
-  annotation/highlight_train_release.jsonl
-  annotation/highlight_val_release.jsonl
-  annotation/highlight_test_with_gt.jsonl  # optional, evaluation only
-  custom_features/video/<vid>.pt
-  custom_features/custom_text/<qid>.npz
-```
+Use the annotations and **InternVideo2-1B features released by SG-DETR**:
 
-Video and text: SG-DETR released InternVideo2-1B features, 512 channels each; video TEF adds two channels. Preserve max query length40, max video length75, clip length2 seconds, normalization and the reference coordinate convention. The same feature family is used for train, val and test. Feature extraction with a pretrained backbone is distinct from additional InterVid-MR task-model pretraining; this recipe does not load a pretrained EventFieldNet checkpoint.
+- [SG-DETR feature instructions](https://github.com/ai-forever/sg-detr)
+- [QVHighlights annotations and evaluation](https://github.com/jayleicn/moment_detr)
 
-Official sources: https://github.com/ai-forever/sg-detr (features), https://github.com/jayleicn/moment_detr (QVHighlights annotations). Respect their licenses and dataset terms. The package does not download third-party data automatically. Train/val byte hashes are checked using docs/annotation_sha256.json. Feature contents are external and are not authenticated by annotation hashes.
+See the directory layout in README.md. Video features are `<vid>.pt`; text features are `<qid>.npz` with a `features` array. Both have 512 channels. Video temporal endpoint features add two channels. The loader preserves normalization, maximum query length 40, maximum video length 75 and the two-second clip grid.
 
-Val has1550 queries; heldout test has1542. The test GT release used for recorded results is pinned to Moment-DETR commit b7e553ac3b0c898ee6b85e03ee507c064eab89ca; file SHA256 bd50ec6bb5dd3f72571126ba5fdc7418efdd9219a9487984e483a02e2ce5d493. No test label is passed as a model input. Do not substitute test data into validation filenames.
+The validation split contains 1550 queries. The included annotation byte hashes are in `docs/annotation_sha256.json`; feature files are external and are not authenticated by annotation hashes. Features and model checkpoints are not bundled.
 
-configs/probe_panel.json contains public training query IDs for diagnostics. Training/validation probe observations are not additional optimization targets.
+The task model is initialized from scratch. Using pretrained InternVideo2 features is separate from additional task-model pretraining; this fixed configuration loads no task checkpoint at startup.
+
+The shipped CLI evaluates validation. No F05 test result is claimed, and test labels must not replace validation annotations. Third-party licenses and dataset terms apply.

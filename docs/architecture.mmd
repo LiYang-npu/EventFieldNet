@@ -1,0 +1,18 @@
+flowchart TD
+ V["Frozen video features: InternVideo2-1B, 512 + TEF"] --> I["Query-conditioned input E/S/T features"]
+ Q["Frozen query features: 512"] --> I
+ I --> H["Shared temporal encoder: 384"]
+ H --> B["Candidate carrier score and boundary head"]
+ V --> F["Raw video/query field interactions"]
+ Q --> F
+ F --> E["E: query-relevant evidence"]
+ F --> S["S: support / coverage compatibility"]
+ F --> T["T: start and end transitions"]
+ B --> R["carrier + E + S + 0.5(Tstart + Tend)"]
+ E --> R
+ S --> R
+ T --> R
+ R --> N["Rank candidates, NMS, temporal windows"]
+ H --> HD["Concat shared 384 + E embedding 64: highlight head"]
+ E -. "embedding, not scalar score" .-> HD
+ HD --> Y["Per-clip highlight logit"]

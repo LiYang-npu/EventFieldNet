@@ -1,0 +1,11 @@
+{
+  "status": "passed",
+  "unit_tests": 4,
+  "exact_original_loss_probe_gradient_cases": 50,
+  "model_kwargs_match_original_except_portable_annotation_paths": true,
+  "model_import": "passed",
+  "python_syntax_files": 113,
+  "torch": "2.11.0+cu130",
+  "full_gpu_checkpoint_parity": "not run for this reorganized package",
+  "historical_F05_unchanged": true
+}
